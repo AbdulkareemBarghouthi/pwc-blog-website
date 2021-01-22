@@ -34,6 +34,16 @@ const LoginCard = styled.div`
   box-shadow: 2px 1px 9px 1px #fff;
   padding: 10px;
 
+  .role-radio-group{
+    margin-top: 15px;
+    align-self: flex-start;
+    margin-left: 44px;
+  }
+
+  .warning{
+    text-align: center;
+    color: red;
+  }
   h2 {
     text-align: center;
   }
