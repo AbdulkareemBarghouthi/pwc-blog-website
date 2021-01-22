@@ -1,0 +1,19 @@
+{
+  "name": "pwc-blog-project",
+  "version": "1.0.0",
+  "description": "pwc blog interview assignment",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AbdulkareemBarghouthi/pwc-blog-website.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AbdulkareemBarghouthi/pwc-blog-website/issues"
+  },
+  "homepage": "https://github.com/AbdulkareemBarghouthi/pwc-blog-website#readme"
+}
