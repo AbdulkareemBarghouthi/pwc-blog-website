@@ -1,9 +1,10 @@
 import "../styles/globals.css";
 import axios from "axios";
-import {getUser} from '../helpers/auth';
+import { useRouter } from 'next/router';
+import { useEffect } from "react";
 
 axios.interceptors.request.use(function (config) {
-  config.url = `http://127.0.0.1:2400${config.url}`;
+  config.url = `https://blog-api-pwc.herokuapp.com${config.url}`;
   if(typeof localStorage !== 'undefined' && localStorage.getItem("token")){
     config.headers.authorization = 'bearer ' + localStorage.getItem("token");
   }
@@ -11,6 +12,7 @@ axios.interceptors.request.use(function (config) {
 });
 
 function MyApp({ Component, pageProps }) {
+
   return <Component {...pageProps} />;
 }
 
