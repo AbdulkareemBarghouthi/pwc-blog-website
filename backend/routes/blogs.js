@@ -14,6 +14,7 @@ router.get("/blog", async (req, res) => {
   const parsedOptions = handleUserSelectedOptions(req.query.options);
   try {
     const allPosts = await Blog.find({}).select(parsedOptions);
+    console.log(allPosts, 'posts');
     res.status(200).json({
       message: "Blogs retrieved successfully",
       status: 200,
@@ -51,14 +52,14 @@ router.get("/blog/:id", async (req, res) => {
 // upload a blog
 router.post("/blog", verifyUser, async (req, res) => {
   const { body } = req;
-
+  
   const user = decodeToken(req.headers.authorization);
 
   const blogDetails = {
     title: body.title,
     content: body.content,
     comments: [],
-    postedBy: user._id,
+    postedBy: user.username, 
   };
 
   const newPost = Blog(blogDetails);

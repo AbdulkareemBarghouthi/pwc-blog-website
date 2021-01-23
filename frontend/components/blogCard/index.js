@@ -2,49 +2,40 @@ import React, { useState } from "react";
 import { Container, Header, Body } from "./styles";
 import { RiSendPlaneLine } from "react-icons/ri";
 import { Input } from "../../styles/generalComponents";
+import moment from "moment";
+import {useRouter} from 'next/router';
 
 const BlogCard = (props) => {
-  const [editable, setEditable] = useState(true);
+  const router = useRouter(); 
+  
+  const [editable, setEditable] = useState(false);
+
   return (
-    <Container>
+    <Container key={props._id} onClick={()=>{
+      if(!router.pathname.includes('feeds')) return;
+      router.push(`/article/${props._id}`)
+    }} key={props.key}>
       <Header>
-        <p className="time-uploaded">Date Uploaded: 01/22/2020 at 3:50pm</p>
-        {editable? 
-        <Input  value="A blog about pizza lorem"/>
-        :
-        <h2 className="title">A blog about pizza lorem</h2>
-        }
-        
-        <p className="uploaded-by">Uploaded By: Abdulkareem Barghouthi</p>
+        <p className="time-uploaded">
+          Date Uploaded:{" "}
+          {moment(props.dateCreated).format("ddd MM YYYY").toString()} at{" "}
+          {moment(props.dateCreated).format("hh:mm a").toString()}
+        </p>
+        {editable ? (
+          <Input value={props.title} />
+        ) : (
+          <h2 className="title">{props.title}</h2>
+        )}
+
+        <p className="uploaded-by">Uploaded By: {props.postedBy}</p>
       </Header>
       {props.type === "article" && (
         <Body>
           <div className="blog-content-holder">
             {editable ? (
-              <textarea className="content-edit" value="Sint qui occaecat ad est excepteur magna Lorem. Sit sunt velit
-              pariatur id veniam proident sit in laboris dolor minim irure.
-              Ipsum fugiat eiusmod do aliquip voluptate exercitation occaecat.
-              Enim cillum in veniam consequat sunt elit. Tempor tempor non
-              voluptate sit dolor.Nisi ad sunt nostrud mollit. Elit magna
-              magna labore incididunt consectetur. In fugiat fugiat minim
-              excepteur cillum reprehenderit aliquip adipisicing adipisicing
-              qui et. Est ex ad nulla reprehenderit dolore anim. Nisi Lorem
-              occaecat ullamco officia sit ullamco proident in. Amet est do
-              cillum sit commodo." />
-                
+              <textarea className="content-edit" value={props.content} />
             ) : (
-              <p>
-                Sint qui occaecat ad est excepteur magna Lorem. Sit sunt velit
-                pariatur id veniam proident sit in laboris dolor minim irure.
-                Ipsum fugiat eiusmod do aliquip voluptate exercitation occaecat.
-                Enim cillum in veniam consequat sunt elit. Tempor tempor non
-                voluptate sit dolor.Nisi ad sunt nostrud mollit. Elit magna
-                magna labore incididunt consectetur. In fugiat fugiat minim
-                excepteur cillum reprehenderit aliquip adipisicing adipisicing
-                qui et. Est ex ad nulla reprehenderit dolore anim. Nisi Lorem
-                occaecat ullamco officia sit ullamco proident in. Amet est do
-                cillum sit commodo.
-              </p>
+              <p>{props.content}</p>
             )}
           </div>
           <div className="comments-section">
