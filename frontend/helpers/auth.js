@@ -1,9 +1,10 @@
-import jwt from 'jwt-decode';
+import jwt from "jwt-decode";
 
-const getUser = ()=>{
-    return jwt(JSON.parse(document.cookie).token);
-}
+const getUser = () => {
+  if (typeof localStorage !== "undefined") {
+    return jwt(localStorage.getItem("token"));
+  }
+  return null;
+};
 
-export{
-    getUser
-}
+export { getUser };

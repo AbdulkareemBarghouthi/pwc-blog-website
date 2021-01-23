@@ -21,16 +21,15 @@ const Login = (props) => {
     try {
       const loginResponse = await loginUser(username, password);
       if(loginResponse.status === 200){
-        document.cookie = JSON.stringify({
-          token: loginResponse.data.token
-        });
+        localStorage.setItem('token', loginResponse.data.token);
         router.push('/feeds');
         return;
       }
 
       setWarningMessage('Something went wrong');
     } catch (error) {
-      if(error.response.data.message) setWarningMessage(error.response.data.message)
+      console.log(error);
+      if(error.response && error.response.data.message) setWarningMessage(error.response.data.message)
       else {
         setWarningMessage('Something went wrong');
       }

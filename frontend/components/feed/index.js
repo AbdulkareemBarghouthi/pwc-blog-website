@@ -4,10 +4,12 @@ import { BsPlusCircleFill } from "react-icons/bs";
 import BlogCard from "../blogCard/index";
 import Loader from "react-spinners/ClipLoader";
 import axios from "axios";
+import { useRouter } from 'next/router';
 
 const Feed = (props) => {
   const [data, setData] = useState([1, 3, 4, 5]);
   const [feedsState, setFeedsState] = useState("loading");
+  const router = useRouter();
 
   const renderFeeds = () => {
     switch (feedsState) {
@@ -29,7 +31,6 @@ const Feed = (props) => {
   const handleFeedsData = async () => {
     try {
       const response = await axios.get("/api/blog");
-      console.log(response, "response");
       setFeedsState("ok");
       setData(response.data.data);
     } catch (error) {
@@ -45,12 +46,11 @@ const Feed = (props) => {
   return (
     <Container>
       <Header>
-        <BsPlusCircleFill size={40} color={"#4a708b"} />
+        <BsPlusCircleFill onClick={()=>{
+          router.push('/upload');
+        }} size={40} color={"#4a708b"} />
       </Header>
       <Content>
-        {/* {data.map((item) => (
-          <BlogCard />
-        ))}  */}
         {renderFeeds()}
       </Content>
     </Container>

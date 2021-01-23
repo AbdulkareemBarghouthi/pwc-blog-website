@@ -14,7 +14,6 @@ router.get("/blog", async (req, res) => {
   const parsedOptions = handleUserSelectedOptions(req.query.options);
   try {
     const allPosts = await Blog.find({}).select(parsedOptions);
-    console.log(allPosts, 'posts');
     res.status(200).json({
       message: "Blogs retrieved successfully",
       status: 200,

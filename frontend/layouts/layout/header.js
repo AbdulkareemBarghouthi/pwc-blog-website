@@ -6,10 +6,12 @@ import {getUser} from '../../helpers/auth';
 
 const Header = (props) => {
   const router = useRouter();
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(null); 
 
   useEffect(()=>{
-    setUser(getUser().data);
+    if(getUser()){
+      setUser(getUser().data);
+    }
   },[])
   return (
     <HeaderContainer>
@@ -19,7 +21,7 @@ const Header = (props) => {
         {!user ? (
           <div className="button-holder">
             <Button onClick={()=>{
-              router.push('/auth/login');
+              router.push('/auth/login'); 
             }} color={"#98f5ff"}>Login</Button>
             Or
             <Button onClick={()=>{
@@ -30,6 +32,10 @@ const Header = (props) => {
           <>
             <p>Logged in as</p>
             <p>{user.username}</p>
+            <Button onClick={()=>{
+              localStorage.clear();
+              router.push('/auth/login');
+            }}>Logout</Button>
           </>
         )}
       </div>

@@ -6,7 +6,7 @@ const loginUser = (username, password) => {
       const response = await axios.get("/api/auth/login", {
         params: {
           username,
-          passwordm,
+          password,
           role: "writer",
         },
       });

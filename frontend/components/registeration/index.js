@@ -36,9 +36,12 @@ const Register = (props) => {
     try {
       const response = await registerUser(username, password, role);
       if (response.status === 200) {
-        document.cookie = JSON.stringify({
-          token: response.data.token,
-        });
+        localStorage.setItem(
+          "token",
+          JSON.stringify({
+            token: response.data.token,
+          })
+        );
         router.push("/feeds");
         return;
       }
