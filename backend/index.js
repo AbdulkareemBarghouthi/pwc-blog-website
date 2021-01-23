@@ -1,10 +1,13 @@
 // Required packages to run project backend
 const express = require("express");
 const mongoose = require("mongoose");
+const cors = require('cors');
+
 
 // initialize express
 const app = express();
 
+app.use(cors());
 app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header(

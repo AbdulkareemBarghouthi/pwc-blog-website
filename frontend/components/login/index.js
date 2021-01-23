@@ -12,25 +12,26 @@ const Login = (props) => {
   const [password, setPassword] = useState("");
   const [warningMessage, setWarningMessage] = useState("");
 
+
   const handleLogin = async () => {
     if (username.length === 0 || password.length === 0) {
       setWarningMessage("Please fill in your username and password");
       return;
     }
-
+ 
     try {
-      const loginResponse = await loginUser(username, password);
+      const loginResponse = await loginUser(username, password, ''); 
+      
       if(loginResponse.status === 200){
-        document.cookie = JSON.stringify({
-          token: loginResponse.data.token
-        });
+        localStorage.setItem('token', loginResponse.data.token);
         router.push('/feeds');
         return;
       }
 
       setWarningMessage('Something went wrong');
     } catch (error) {
-      if(error.response.data.message) setWarningMessage(error.response.data.message)
+      console.log(error);
+      if(error.response && error.response.data.message) setWarningMessage(error.response.data.message)
       else {
         setWarningMessage('Something went wrong');
       }
@@ -38,6 +39,8 @@ const Login = (props) => {
     }
     
   };
+
+  
   return (
     <AuthLayout>
       <DimBackground>

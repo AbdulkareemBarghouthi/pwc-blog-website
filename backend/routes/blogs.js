@@ -51,14 +51,14 @@ router.get("/blog/:id", async (req, res) => {
 // upload a blog
 router.post("/blog", verifyUser, async (req, res) => {
   const { body } = req;
-
+  
   const user = decodeToken(req.headers.authorization);
-
   const blogDetails = {
     title: body.title,
     content: body.content,
     comments: [],
-    postedBy: user._id,
+    postedBy: user.username, 
+    userId: user._id
   };
 
   const newPost = Blog(blogDetails);
@@ -76,7 +76,6 @@ router.post("/blog", verifyUser, async (req, res) => {
   }
 });
 
-// decodeToken(req.headers.authorization)
 
 // edit a blog
 router.put("/blog/:id", verifyUser, async (req, res) => {
@@ -92,7 +91,7 @@ router.put("/blog/:id", verifyUser, async (req, res) => {
     });
   }
 
-  if (!userAuthorized(req.headers.authorization, selelctedBlog.postedBy)) {
+  if (!userAuthorized(req.headers.authorization, selelctedBlog.userId)) {
     res.status(401).json({
       message: "User not authorized to do this operation",
       success: false,
@@ -129,11 +128,14 @@ router.put("/blog/:id", verifyUser, async (req, res) => {
 });
 
 // delete a blog
-router.delete("/blog/:id", verifyUser, async (req, res) => {
+router.delete("/blog", verifyUser, async (req, res) => {
   const blogId = req.params.id;
 
   try {
     const deletedBlog = await Blog.deleteOne({ _id: blogId });
+    // const deletedBlog = await Blog.deleteMany({});
+
+
     res.status(200).json({
       message: "Blog deleted successfully",
       data: deletedBlog,

@@ -1,8 +1,10 @@
-const isUsernameValid = (username)=>{
+import jwt from "jwt-decode";
 
-}
+const getUser = () => {
+  if (typeof localStorage !== "undefined" && localStorage.getItem('token')) {
+    return jwt(localStorage.getItem("token"));
+  }
+  return null;
+};
 
-const isPasswordValid = (password)=>{
-    if(password.length < 5) return {valid: false, reason: "Password Must be atleast 6 characters"};
-    
-} 
+export { getUser };
