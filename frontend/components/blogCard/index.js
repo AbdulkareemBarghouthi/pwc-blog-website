@@ -6,7 +6,8 @@ import moment from "moment";
 import { useRouter } from "next/router";
 import Loader from "react-spinners/ClipLoader";
 import axios from "axios";
-import {FiSave} from 'react-icons/fi';
+import { FiSave } from "react-icons/fi";
+import { getUser } from "../../helpers/auth";
 
 const BlogCard = (props) => {
   const router = useRouter();
@@ -15,8 +16,10 @@ const BlogCard = (props) => {
   const [comments, setComments] = useState([]);
   const [title, setTitle] = useState(props.title);
   const [content, setContent] = useState(props.content);
-  const [blogUpdateLoading, setBlogUpdateLoading] = useState(false); 
-
+  const [blogUpdateLoading, setBlogUpdateLoading] = useState(false);
+  const [user, setUser] = useState(null);
+  const [comment, setComment] = useState("");
+  const [commentLoading, setCommentLoading] = useState(false);
 
   const renderComments = () => {
     switch (commentState) {
@@ -42,27 +45,27 @@ const BlogCard = (props) => {
     }
   };
 
-  const updateBlog = async () =>{
-    setBlogUpdateLoading(true)
+  const updateBlog = async () => {
+    setBlogUpdateLoading(true);
     try {
       const response = await axios.put(`/api/blog/${props._id}`, {
         title: title,
         content: content,
       });
 
-      if(response.status === 200){
-        alert('Blog updated Succesfully');
+      if (response.status === 200) {
+        alert("Blog updated Succesfully");
         location.reload();
         return;
       }
 
-      alert('Something went wrong');
-    } catch (error){
-      alert('Something went wrong');
+      alert("Something went wrong");
+    } catch (error) {
+      alert("Something went wrong");
     } finally {
       setBlogUpdateLoading(false);
     }
-  }
+  };
 
   const getComments = async () => {
     try {
@@ -73,6 +76,30 @@ const BlogCard = (props) => {
       setCommentState("error");
     }
   };
+
+  const addComment = async () => {
+    if(comment.length === 0) return;
+    setCommentLoading(true);
+    try {
+      const response = await axios.post(`/api/blog/${props._id}/comment`, {
+        comment: comment,
+      });
+
+      if (response.status === 200) {
+        getComments();
+        setCommentLoading(false);
+      }
+    } catch (error) {
+      alert("Something went wrong");
+      setCommentLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (getUser()) {
+      setUser(getUser().data);
+    }
+  }, []);
 
   useEffect(() => {
     if (props._id) {
@@ -90,10 +117,9 @@ const BlogCard = (props) => {
   }, [props.title, props.content]);
 
   useEffect(() => {
-      setTitle(props.title);
-      setContent(props.content);
+    setTitle(props.title);
+    setContent(props.content);
   }, [props.cancel]);
-
 
   return (
     <Container
@@ -138,25 +164,40 @@ const BlogCard = (props) => {
               <p>{content}</p>
             )}
           </div>
-          {editable && 
-          <Button onClick={updateBlog}>
-            {blogUpdateLoading ?
-            <Loader size={20} color={'white'}/>
-          : 
-           <FiSave size={20} color={'white'}/>
-          }
-          
-          </Button>
-        }
+          {editable && (
+            <Button onClick={updateBlog}>
+              {blogUpdateLoading ? (
+                <Loader size={20} color={"white"} />
+              ) : (
+                <FiSave size={20} color={"white"} />
+              )}
+            </Button>
+          )}
           <div className="comments-section">
             <p>Comments:</p>
             <div className="comments-holder">{renderComments()}</div>
-            <div className="comment-submission">
-              <input type="text" placeholder={"Leave a comment"} />
-              <div className="send-button">
-                <RiSendPlaneLine color={"white"} size={20} />
+            {user ? (
+              <div className="comment-submission">
+                <input
+                  type="text"
+                  onChange={(e) => {
+                    setComment(e.target.value);
+                  }}
+                  placeholder={"Leave a comment"}
+                  value={comment}
+                />
+                <div className="send-button">
+                
+                  {commentLoading ? (
+                    <Loader size={10} color={"white"} />
+                  ) : (
+                    <RiSendPlaneLine onClick={addComment} color={"white"} size={20} />
+                  )}
+                </div>
               </div>
-            </div>
+            ) : (
+              <p className="login-messsage">Login to be able to comment</p>
+            )}
           </div>
         </Body>
       )}

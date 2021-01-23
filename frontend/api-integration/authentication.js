@@ -1,13 +1,13 @@
 import axios from "axios";
 
-const loginUser = (username, password) => {
+const loginUser = (username, password, role="") => {
   return new Promise(async (resolve, reject) => {
     try {
       const response = await axios.get("/api/auth/login", {
         params: {
           username,
           password,
-          role: "writer",
+          role: role,
         },
       });
 

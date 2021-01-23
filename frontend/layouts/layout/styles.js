@@ -27,6 +27,7 @@ const HeaderContainer = styled.div`
 
   img {
     width: 100px;
+    cursor: pointer;
   }
 
   .user-holder {
@@ -37,6 +38,18 @@ const HeaderContainer = styled.div`
           align-items: center;
           justify-content: space-between;
       }
+  }
+
+  .login-holder {
+    display: flex;
+    align-items: center;
+    flex-direction: row-reverse;
+    justify-content: space-evenly;
+  }
+
+  .admin-message {
+    color: coral;
+    text-align: center;
   }
 `;
 

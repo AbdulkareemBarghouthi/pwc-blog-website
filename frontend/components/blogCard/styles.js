@@ -46,6 +46,9 @@ const Body = styled.div`
   }
   
   .comments-section {
+    .login-messsage {
+      color: coral;
+    }
     .comment-submission{
         margin: 7px 0;
         display: flex;

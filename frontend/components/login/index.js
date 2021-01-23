@@ -12,14 +12,16 @@ const Login = (props) => {
   const [password, setPassword] = useState("");
   const [warningMessage, setWarningMessage] = useState("");
 
+
   const handleLogin = async () => {
     if (username.length === 0 || password.length === 0) {
       setWarningMessage("Please fill in your username and password");
       return;
     }
-
+ 
     try {
-      const loginResponse = await loginUser(username, password);
+      const loginResponse = await loginUser(username, password, ''); 
+      
       if(loginResponse.status === 200){
         localStorage.setItem('token', loginResponse.data.token);
         router.push('/feeds');
@@ -37,6 +39,8 @@ const Login = (props) => {
     }
     
   };
+
+  
   return (
     <AuthLayout>
       <DimBackground>

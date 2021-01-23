@@ -32,6 +32,7 @@ const Feed = (props) => {
     try {
       const response = await axios.get("/api/blog");
       setFeedsState("ok");
+      
       setData(response.data.data);
     } catch (error) {
       setFeedsState("error");

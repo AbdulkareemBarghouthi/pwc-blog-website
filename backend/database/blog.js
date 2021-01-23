@@ -14,6 +14,7 @@ const model = mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  userId: String,
   postedBy: String,
   comments: [],
 });

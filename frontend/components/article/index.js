@@ -75,7 +75,7 @@ const Article = (props) => {
       );
     }
 
-    if (user.data._id !== articleData.postedBy) {
+    if (user.data._id !== articleData.userId) {
       return null;
     }
 
@@ -93,7 +93,12 @@ const Article = (props) => {
           </>
         )}
 
-        <FiEdit size={30} />
+        <FiEdit
+          onClick={() => {
+            setEditMode(true);
+          }}
+          size={30}
+        />
       </Header>
     );
   };
