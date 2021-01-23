@@ -29,7 +29,7 @@ app.use("/api/auth", authRoute);
 app.use("/api", blogRoute);
 
 // App Strings
-const dbURI = "mongodb://localhost/pwc-application";
+const dbURI = "mongodb+srv://kareembar:U0jALlbuvND49U5n@cluster0.0vg6d.mongodb.net/Blog?retryWrites=true&w=majority";
 
 // Database connection
 
