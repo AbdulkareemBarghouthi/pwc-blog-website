@@ -6,7 +6,6 @@ const jwt = require('jsonwebtoken');
 const { generateToken } = require('../helpers/authHelpers');
 // const middleware = require('../middleware');
 const rounds = 10;
-const tokenSecret = 'my-token-secret';
 
 router.get('/login', async (req, res) => {
     try {

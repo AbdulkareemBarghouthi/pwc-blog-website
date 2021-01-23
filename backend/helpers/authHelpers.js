@@ -15,8 +15,13 @@ const verifyUser = (req, res, next) => {
             if (err) res.status(500).json({ error: 'failed to authenticate token' });
             req.user = value.data;
             next();
-        })
+        });
     }
+}
+
+const handleUserRole = (req, res, next) => {
+    const token = req.headers.authorization;
+    
 }
 
 module.exports = {
