@@ -24,6 +24,7 @@ const Button = styled.button`
     color: white;
     border: none;
     border-radius: 3px;
+    cursor: pointer;
 `;
 
 const LoginCard = styled.div`

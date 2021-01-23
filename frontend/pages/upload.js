@@ -1,11 +1,11 @@
 import React from "react";
 import AppLayout from "../layouts/layout/index";
-import Feed from '../components/feed/index';
+import UploadBlog from '../components/uploadBlog/index';
 
 const FeedPage = (props) => {
   return (
     <AppLayout>
-      <Feed />
+      <UploadBlog /> 
     </AppLayout>
   );
 };
