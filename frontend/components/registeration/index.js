@@ -28,6 +28,12 @@ const Register = (props) => {
       return;
     }
 
+    if(role === "admin"){
+      const adminpass = prompt("Enter the admin passcode");
+
+      if(adminpass !== 'admin1234') return;
+    }
+
     if (password !== confirmPasswordVal) {
       setWarningMessage("Passwords Do not match");
       return;
